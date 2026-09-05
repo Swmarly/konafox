@@ -20,7 +20,7 @@
 !endif
 
 # These defines should match application.ini settings
-!define AppName               "Waterfox"
+!define AppName               "@MOZ_APP_BASENAME@"
 !define AppVersion            "@APP_VERSION@"
 !define AppVersionDisplay     "@APP_VERSION_DISPLAY@"
 !define GREVersion            @MOZILLA_VERSION@
@@ -31,11 +31,11 @@
 !define PrivateBrowsingEXE    "private_browsing.exe"
 !define MainWindowClass       "WaterfoxWindowClass"
 !define DialogWindowClass     "WaterfoxDialogClass"
-!define DDEApplication        "Waterfox"
-!define AppRegName            "Waterfox"
+!define DDEApplication        "@MOZ_APP_BASENAME@"
+!define AppRegName            "@MOZ_APP_BASENAME@"
 !define ToastAumidPrefix      "@MOZ_TOAST_APP_NAME@Toast-"
 
-!define BrandProductName      "Waterfox"
+!define BrandProductName      "@MOZ_APP_BASENAME@"
 !ifndef DEV_EDITION
 !define BrandShortName        "@MOZ_APP_DISPLAYNAME@"
 !endif

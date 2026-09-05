@@ -459,6 +459,12 @@ const PALETTES = {
   },
 };
 
+if (Services.appinfo.name === "KonaFox") {
+  PALETTES.default = ChromeUtils.importESModule(
+    "resource:///modules/KonaFoxPalette.sys.mjs"
+  ).KONAFOX_PALETTE;
+}
+
 const COLOR_ORDER = [
   DEFAULT_COLOR,
   "smoke",
@@ -667,6 +673,7 @@ export const WaterfoxThemeColors = {
 
   hasSelection() {
     return (
+      Services.appinfo.name === "KonaFox" ||
       Services.prefs.prefHasUserValue(WATERFOX_THEME_MODE_PREF) ||
       Services.prefs.prefHasUserValue(WATERFOX_THEME_COLOR_PREF)
     );

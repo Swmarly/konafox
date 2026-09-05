@@ -1,0 +1,27 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# KonaFox's private Windows development and packaging profile.
+wfx_app_basename=KonaFox
+wfx_app_name=konafox
+wfx_branding=konafox/branding
+wfx_distribution_id=private.konafox
+
+. "$topsrcdir/waterfox/build/mozconfig.common"
+
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)
+        export PATH="$clang22/bin:$PATH"
+        export CC="$clang22/bin/clang-cl.exe"
+        export CXX="$CC"
+        export HOST_CC="$CC"
+        export HOST_CXX="$CC"
+        ac_add_options --with-l10n-base="$(cygpath -m "$topsrcdir/waterfox/browser/locales")"
+        ac_add_options --with-wasi-sysroot="$(cygpath -m "$wasi_sysroot")"
+        ;;
+esac
+
+ac_add_options MOZ_APP_PROFILE=KonaFox
+ac_add_options --enable-update-channel=konafox-private
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-konafox

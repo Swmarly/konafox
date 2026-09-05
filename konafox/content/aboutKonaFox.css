@@ -1,0 +1,131 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+  color-scheme: light dark;
+  --konafox-ink: light-dark(#303858, #e8ecfa);
+  --konafox-surface: light-dark(#f7f6fa, #22263f);
+  --konafox-card: light-dark(#ffffff, #292e4c);
+  --konafox-line: light-dark(#d7dcf4, #4d568f);
+  --konafox-accent-line: #747ccb;
+  --konafox-link: light-dark(#4d568f, #b7ace2);
+  --size-konafox-content: calc(2 * var(--size-layout-large));
+  --size-konafox-intro: calc(2 * var(--size-layout-medium));
+  --size-konafox-logo-small: var(--size-image-large);
+  --font-size-konafox-title: var(--font-size-xxlarge);
+  color: var(--konafox-ink);
+  background: var(--konafox-surface);
+
+  @media (prefers-contrast) {
+    --konafox-line: currentColor;
+    --konafox-accent-line: currentColor;
+  }
+
+  @media (forced-colors: active) {
+    --konafox-ink: var(--text-color);
+    --konafox-surface: var(--background-color-canvas);
+    --konafox-card: var(--background-color-box);
+    --konafox-line: var(--border-color);
+    --konafox-accent-line: var(--border-color);
+    --konafox-link: var(--link-color);
+  }
+}
+
+body {
+  margin: 0;
+  padding: var(--space-xxlarge);
+  line-height: 1.65;
+}
+
+main {
+  max-inline-size: var(--size-konafox-content);
+  margin-inline: auto;
+}
+
+header {
+  padding-block-end: var(--space-xxlarge);
+}
+
+.logo {
+  float: inline-end;
+  margin-inline-start: var(--space-xlarge);
+}
+
+.eyebrow {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+}
+
+h1 {
+  font-size: var(--font-size-konafox-title);
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  margin-block: var(--space-large);
+}
+
+.intro {
+  max-inline-size: var(--size-konafox-intro);
+  font-size: var(--font-size-large);
+}
+
+.versions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xlarge);
+  background: var(--konafox-card);
+  border: 1px solid var(--konafox-line);
+  border-block-start: 3px solid var(--konafox-accent-line);
+  border-radius: var(--border-radius-large);
+  padding: var(--space-xxlarge);
+}
+
+dt {
+  font-size: var(--font-size-small);
+}
+
+dd {
+  font-weight: var(--font-weight-semibold);
+  margin-inline: 0;
+  overflow-wrap: anywhere;
+}
+
+section {
+  margin-block: var(--space-xxlarge);
+}
+
+h2 {
+  font-size: var(--font-size-xlarge);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xlarge);
+  border-block-start: 1px solid var(--konafox-line);
+  padding-block-start: var(--space-xlarge);
+}
+
+a {
+  color: var(--konafox-link);
+  text-underline-offset: 3px;
+}
+
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+  border-radius: var(--border-radius-xsmall);
+}
+
+@media (max-width: 540px) {
+  .versions {
+    grid-template-columns: 1fr;
+    padding: var(--space-large);
+  }
+
+  .logo {
+    inline-size: var(--size-konafox-logo-small);
+    block-size: var(--size-konafox-logo-small);
+  }
+}

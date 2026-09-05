@@ -1,0 +1,26 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+case $(uname -s) in
+    MINGW*|MSYS*|CYGWIN*)
+        ac_add_options --disable-bits-download
+        ac_add_options --disable-maintenance-service
+        ac_add_options --disable-parental-controls
+        ;;
+esac
+wfx_dev=1
+wfx_target=
+. "$topsrcdir/waterfox/build/mozconfig.common"
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)
+        export PATH="$clang22/bin:$PATH"
+        export CC="$clang22/bin/clang-cl.exe"
+        export CXX="$CC"
+        export HOST_CC="$CC"
+        export HOST_CXX="$CC"
+        ac_add_options --with-l10n-base="$(cygpath -m "$topsrcdir/waterfox/browser/locales")"
+        ac_add_options --with-wasi-sysroot="$(cygpath -m "$wasi_sysroot")"
+        ;;
+esac
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-waterfox-baseline

@@ -1,0 +1,16 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@-moz-document url("chrome://browser/content/browser.xhtml")
+{
+  @media (forced-colors: none) {
+    @media -moz-pref("konafox.artwork.enabled") {
+      #TabsToolbar {
+        background-image: url("chrome://konafox/content/art/toolbar.svg");
+        background-position: center right;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}

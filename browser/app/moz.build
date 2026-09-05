@@ -79,6 +79,10 @@ if CONFIG["CC_TYPE"] == "clang-cl":
 
 if CONFIG["OS_ARCH"] == "WINNT":
     RCINCLUDE = "splash.rc"
+    if CONFIG["MOZ_APP_NAME"] == "konafox":
+        DEFINES["KONAFOX_MANIFEST"] = (
+            '"%s/konafox/branding/konafox.exe.manifest"' % TOPSRCDIR
+        )
     DIRS += [
         "installation_dir_layout",
         "pbproxy",

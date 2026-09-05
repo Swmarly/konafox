@@ -1,0 +1,7 @@
+konafox.jar:
+% content konafox %content/konafox/ contentaccessible=yes
+* content/konafox/about/aboutKonaFox.html (content/aboutKonaFox.html)
+  content/konafox/about/aboutKonaFox.css (content/aboutKonaFox.css)
+  content/konafox/theme/chrome.css (theme/chrome.css)
+  content/konafox/theme/content.css (theme/content.css)
+  content/konafox/art/ (assets/*.svg)

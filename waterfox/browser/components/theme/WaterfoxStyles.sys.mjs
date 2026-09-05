@@ -25,6 +25,14 @@ export const WaterfoxStyles = {
     Services.obs.addObserver(this, "browser-delayed-startup-finished");
     Services.obs.addObserver(this, "chrome-document-loaded");
     lazy.StyleSheetUtils.registerStylesheet(CONTENT_URI);
+    if (Services.appinfo.name === "KonaFox") {
+      lazy.StyleSheetUtils.registerStylesheet(
+        "chrome://konafox/content/theme/chrome.css"
+      );
+      lazy.StyleSheetUtils.registerStylesheet(
+        "chrome://konafox/content/theme/content.css"
+      );
+    }
 
     for (const win of Services.wm.getEnumerator(BROWSER_WINDOW_TYPE)) {
       this._loadChromeSheet(win.document);

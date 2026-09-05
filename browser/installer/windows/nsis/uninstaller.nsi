@@ -739,7 +739,7 @@ Section "Uninstall"
   ; subsequently deleted after checking. If the value is found during startup
   ; the browser will offer to Reset Firefox. We use the UpdateChannel to match
   ; uninstalls of Firefox-release with reinstalls of Firefox-release, for example.
-  WriteRegStr HKCU "Software\BrowserWorks\Waterfox" "Uninstalled-${UpdateChannel}" "True"
+  WriteRegStr HKCU "Software\BrowserWorks\${AppName}" "Uninstalled-${UpdateChannel}" "True"
 
 !ifdef MOZ_MAINTENANCE_SERVICE
   ; Get the path the allowed cert is at and remove it

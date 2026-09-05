@@ -31,4 +31,4 @@ esac
 wfx_dev=1
 wfx_target=
 
-. "$topsrcdir/waterfox/build/mozconfig.common"
+. "$topsrcdir/konafox/build/mozconfig.common"

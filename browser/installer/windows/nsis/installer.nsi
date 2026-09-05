@@ -437,9 +437,9 @@ Section "-Application" APP_IDX
     ${RegCleanUninstall}
     ${UpdateProtocolHandlers}
 
-    ReadRegStr $0 HKLM "Software\waterfox.net\Waterfox" "CurrentVersion"
+    ReadRegStr $0 HKLM "Software\waterfox.net\${AppName}" "CurrentVersion"
     ${If} "$0" != "${GREVersion}"
-      WriteRegStr HKLM "Software\waterfox.net\Waterfox" "CurrentVersion" "${GREVersion}"
+      WriteRegStr HKLM "Software\waterfox.net\${AppName}" "CurrentVersion" "${GREVersion}"
     ${EndIf}
   ${EndIf}
 

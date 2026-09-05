@@ -1,0 +1,56 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@-moz-document url("about:home"), url("about:newtab") {
+  :root {
+    --size-konafox-character: clamp(160px, 24vw, 340px);
+  }
+
+  .logo-and-wordmark .wordmark {
+    background-image: url("chrome://branding/content/about-wordmark.svg") !important;
+    background-size: contain !important;
+  }
+
+  @media (forced-colors: none) and -moz-pref("konafox.artwork.enabled") {
+    body:not(.lightWallpaper, .darkWallpaper) .outer-wrapper {
+      background-image: url("chrome://konafox/content/art/newtab-character.svg"), url("chrome://konafox/content/art/newtab-background.svg");
+      background-repeat: no-repeat;
+      background-position:
+        right bottom,
+        center;
+      /* stylelint-disable-next-line stylelint-plugin-mozilla/use-design-tokens -- Scale decorative artwork with the viewport. */
+      background-size:
+        var(--size-konafox-character) auto,
+        cover;
+      background-attachment: fixed;
+    }
+  }
+}
+
+@-moz-document url("about:privatebrowsing") {
+  @media (forced-colors: none) {
+    html.private {
+      --background-color-canvas: #22263f !important;
+      --text-color: #e8ecfa !important;
+      --color-accent-primary: #b7ace2 !important;
+      --link-color: #e8ecfa !important;
+    }
+
+    @media -moz-pref("konafox.artwork.enabled") {
+      html.private body {
+        background: url("chrome://konafox/content/art/private-background.svg") center / cover fixed !important;
+      }
+    }
+  }
+}
+
+@-moz-document url("about:welcome") {
+  @media (forced-colors: none) {
+    :root {
+      --color-accent-primary: light-dark(#4d568f, #b7ace2) !important;
+      --color-accent-primary-hover: light-dark(#3c4475, #d0c8eb) !important;
+      --color-accent-primary-active: light-dark(#303858, #e3dff2) !important;
+    }
+  }
+}
