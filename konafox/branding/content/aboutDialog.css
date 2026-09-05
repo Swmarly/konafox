@@ -1,0 +1,36 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+  --konafox-about-ink: light-dark(#303858, #e8ecfa);
+  --konafox-about-surface: light-dark(#f7f6fa, #22263f);
+  --size-konafox-about-logo-box: var(--size-layout-small);
+
+  @media (forced-colors: active) {
+    --konafox-about-ink: var(--text-color);
+    --konafox-about-surface: var(--background-color-canvas);
+  }
+}
+
+#aboutDialogContainer {
+  color: var(--konafox-about-ink);
+  background: var(--konafox-about-surface);
+  color-scheme: light dark;
+}
+
+#leftBox {
+  background: url("chrome://branding/content/about-logo.svg") center / 160px no-repeat;
+  min-width: var(--size-konafox-about-logo-box);
+  min-height: var(--size-konafox-about-logo-box);
+  margin-inline-start: var(--space-large);
+}
+
+#rightBox {
+  margin-inline: var(--space-xlarge);
+  padding-block-start: calc(4 * var(--space-large));
+}
+
+#trademark {
+  margin-block: var(--space-large);
+}

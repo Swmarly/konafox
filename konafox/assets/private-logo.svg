@@ -1,0 +1,10 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>KonaFox private browsing temporary emblem</title>
+  <rect x="12" y="12" width="232" height="232" rx="76" fill="#292e4c"/>
+  <path d="M185 50C84 48 44 155 126 210 35 205 29 79 102 46c27-12 57-11 83 4z" fill="#8994da"/>
+  <path d="m163 83 14 33 36 4-26 24 7 35-31-18-31 18 7-35-26-24 36-4z" fill="#b7ace2"/>
+  <circle cx="92" cy="187" r="8" fill="#e6a3c5"/>
+</svg>

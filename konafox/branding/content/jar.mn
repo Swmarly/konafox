@@ -1,0 +1,19 @@
+browser.jar:
+% content branding %content/branding/ contentaccessible=yes
+  content/branding/about.png
+  content/branding/about-logo.png
+  content/branding/about-logo.svg (../../assets/logo.svg)
+  content/branding/about-logo@2x.png
+  content/branding/about-logo-private.png
+  content/branding/about-logo-private@2x.png
+  content/branding/about-wordmark.svg (../../assets/wordmark.svg)
+  content/branding/firefox-wordmark.svg (../../assets/wordmark.svg)
+  content/branding/background.svg (../../assets/about-background.svg)
+  content/branding/document.ico (../document.ico)
+  content/branding/document_pdf.svg (../../assets/document-pdf.svg)
+  content/branding/icon16.png (../default16.png)
+  content/branding/icon32.png (../default32.png)
+  content/branding/icon48.png (../default48.png)
+  content/branding/icon64.png (../default64.png)
+  content/branding/icon128.png (../default128.png)
+  content/branding/aboutDialog.css

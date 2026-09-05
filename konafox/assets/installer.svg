@@ -1,0 +1,11 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164 314">
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#747ccb"/><stop offset="1" stop-color="#353d68"/></linearGradient></defs>
+  <rect width="164" height="314" fill="url(#sky)"/>
+  <path d="m82 70 12 27 29 3-22 20 6 29-25-15-25 15 6-29-22-20 29-3z" fill="#e8ecfa"/>
+  <path d="M47 251c27-26 58-32 117-23v86H0v-32z" fill="#8994da" opacity=".25"/>
+  <text x="82" y="193" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="27" font-weight="600" fill="#f7f6fa">KonaFox</text>
+  <path d="M60 212h44" stroke="#e6a3c5" stroke-width="3" stroke-linecap="round"/>
+</svg>

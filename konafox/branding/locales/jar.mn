@@ -1,0 +1,7 @@
+#filter substitution
+[localization] @AB_CD@.jar:
+  branding (%*.ftl)
+
+@AB_CD@.jar:
+% locale branding @AB_CD@ %locale/branding/
+  locale/branding/brand.properties (%brand.properties)

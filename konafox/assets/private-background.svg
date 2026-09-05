@@ -1,0 +1,8 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs><radialGradient id="night"><stop stop-color="#4d568f" stop-opacity=".45"/><stop offset="1" stop-color="#22263f" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="960" cy="80" rx="1000" ry="740" fill="url(#night)"/>
+  <g fill="#b7ace2" opacity=".4"><path d="m280 200 4 12 13 4-13 4-4 12-4-12-13-4 13-4z"/><circle cx="1520" cy="210" r="3"/><circle cx="390" cy="870" r="3"/></g>
+</svg>

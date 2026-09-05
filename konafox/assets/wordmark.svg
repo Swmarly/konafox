@@ -1,0 +1,8 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 88">
+  <title>KonaFox</title>
+  <text x="4" y="68" font-family="Segoe UI, sans-serif" font-size="76" font-weight="650" letter-spacing="-3" fill="#747ccb">KonaFox</text>
+  <path d="m384 18 4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#e6a3c5"/>
+</svg>

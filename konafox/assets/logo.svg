@@ -1,0 +1,12 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>KonaFox temporary star and hair emblem</title>
+  <defs><linearGradient id="hair" x2=".8" y2="1"><stop stop-color="#8994da"/><stop offset="1" stop-color="#4d568f"/></linearGradient></defs>
+  <rect x="12" y="12" width="232" height="232" rx="76" fill="#e8ecfa"/>
+  <path d="M202 201c-55 28-125 22-151-15C16 136 60 50 135 49c33 0 64 18 77 41-45-25-87-8-103 26l41-12-31 34 53-15-34 44 60-12-33 35z" fill="url(#hair)"/>
+  <path d="M123 55c-9-32 21-45 45-29-23-3-29 13-28 31" fill="#8994da"/>
+  <path d="m176 100 11 25 27 3-20 18 5 27-23-14-24 14 6-27-20-18 27-3z" fill="#fff0c9" stroke="#4d568f" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="79" cy="183" r="9" fill="#e6a3c5"/>
+</svg>
