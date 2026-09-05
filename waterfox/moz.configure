@@ -5,5 +5,21 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 imply_option("MOZ_APP_UA_NAME", "Firefox")
-imply_option("MOZ_APP_PROFILE", "Waterfox")
-imply_option("--with-distribution-id", "net.waterfox")
+
+
+@depends("--with-app-basename")
+def waterfox_app_profile(basename):
+    return "KonaFox" if basename and basename[0] == "KonaFox" else "Waterfox"
+
+
+imply_option("MOZ_APP_PROFILE", waterfox_app_profile)
+
+
+@depends("--with-app-basename")
+def waterfox_distribution_id(basename):
+    return (
+        "private.konafox" if basename and basename[0] == "KonaFox" else "net.waterfox"
+    )
+
+
+imply_option("--with-distribution-id", waterfox_distribution_id)

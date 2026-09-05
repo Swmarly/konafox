@@ -22,6 +22,5 @@ case "$(uname -s)" in
         ;;
 esac
 
-ac_add_options MOZ_APP_PROFILE=KonaFox
 ac_add_options --enable-update-channel=konafox-private
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-konafox
