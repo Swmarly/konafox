@@ -1,0 +1,167 @@
+# Building KonaFox on Windows x64
+
+KonaFox is a private customization of **BrowserWorks/Waterfox**, not a separate
+Gecko development branch. The default `.mozconfig` selects KonaFox. The explicit
+Windows configuration is `konafox/build/mozconfig.windows`.
+
+## Environment
+
+Use Windows 10/11 x64, a path without spaces, and ample disk space (the platform
+documentation specifies at least 40 GB free; allow substantially more for two
+object directories). Install [MozillaBuild](https://firefox-source-docs.mozilla.org/setup/windows_build.html),
+then use `C:\mozilla-build\start-shell.bat`. Mach manages the remaining build
+dependencies. A full source build is required; Mozilla Firefox artifact builds
+are not a substitute for this Waterfox fork.
+
+From the MozillaBuild shell:
+
+```sh
+cd /i/GitHub-Repos/konafox
+git -c 'url.https://github.com/.insteadOf=git@github.com:' submodule update --init --recursive
+./mach bootstrap --help
+./mach bootstrap --application-choice browser
+```
+
+The locale submodule must remain at the commit recorded by Waterfox. Do not
+update it independently to its latest branch. Waterfox also requires its
+Clang 22 and WASI toolchain, which its shared mozconfig deliberately excludes
+from ordinary automatic bootstrap. Before running the following upstream helper,
+inspect its destinations under `$HOME/.mozbuild`: it replaces toolchain folders
+when they are missing/incomplete.
+
+```sh
+scripts/fetch-clang-22.sh
+```
+
+Use the Rust version required by the current tree/bootstrap. The inherited
+workflow at the initial KonaFox base requests Rust 1.97.1; check that requirement
+again after an upstream merge. Do not disable security checks to work around an
+unavailable toolchain. For packaging, the Windows SDK, MSVC runtime redistributable,
+NSIS, and archiver must be available through the normal build environment.
+
+The KonaFox wrappers select `clang-cl.exe` for native Windows compilation and
+put Clang 22's `bin` directory on `PATH`. At this base revision, Waterfox's local
+development fragment selects `clang.exe`, which Gecko rejects for Windows MSVC.
+The baseline wrapper applies the same toolchain correction without branding.
+Both wrappers also convert the locale and WASI directories to native Windows
+paths for Gecko's Python configuration checks.
+
+### Environment prepared in this checkout
+
+The initial setup installed MozillaBuild 4.2.1 at `C:\mozilla-build`, Clang
+22.1.8 and its matching WASI sysroot under `C:\Users\sunbu\.mozbuild`, and Rust
+1.97.1 under this checkout's ignored `artifacts/` directory. Mach's downloaded
+tools, including the Windows SDK, are also under `artifacts/mozbuild-state`.
+For this existing setup, use PowerShell:
+
+```powershell
+$env:MOZILLABUILD = 'C:\mozilla-build'
+$env:MOZBUILD_STATE_PATH = Join-Path $PWD 'artifacts\mozbuild-state'
+$env:CARGO_HOME = Join-Path $PWD 'artifacts\cargo'
+$env:RUSTUP_HOME = Join-Path $PWD 'artifacts\rustup'
+$env:PYTHONIOENCODING = 'utf-8'
+$env:PATH = "$env:CARGO_HOME\bin;C:\mozilla-build\python3;C:\mozilla-build\msys2\usr\bin;C:\Program Files\Git\cmd;" + $env:PATH
+$env:MOZCONFIG = 'konafox/build/mozconfig.windows'
+& C:\mozilla-build\python3\python.exe mach build *> artifacts/konafox-build.log
+```
+
+Use the same environment for subsequent `mach` commands. These local dependency
+paths are not committed build requirements. A fresh machine can use the standard
+bootstrap workflow above. Automated bootstrap uses the global option before the
+command: `mach --no-interactive bootstrap --application-choice browser`.
+
+On this machine, MSYS archive extraction failed on forward links and later on
+DLL address allocation. Native Windows `tar.exe` successfully extracted the WASI
+archive; missing Clang executable aliases were copied from their extracted
+targets. No exploit mitigations were disabled. If bootstrap succeeds but Mach
+cannot access its downloaded tools inside an agent sandbox, run it in a normal
+user terminal with access to those directories.
+
+## Waterfox baseline
+
+```sh
+export MOZCONFIG=konafox/build/mozconfig.waterfox
+./mach build > artifacts/waterfox-build.log 2>&1
+./mach run
+```
+
+Create `artifacts/` first if necessary. This selects Waterfox branding and uses
+`obj-waterfox-baseline`. For a byte-for-byte untouched source baseline, create a
+separate checkout/worktree at the recorded upstream revision and use its own
+`.mozconfig`; do not discard KonaFox's working changes to obtain that baseline.
+
+## KonaFox development, packaging, and installer
+
+```sh
+export MOZCONFIG=konafox/build/mozconfig.windows
+./mach build > artifacts/konafox-build.log 2>&1
+./mach run
+./mach package > artifacts/konafox-package.log 2>&1
+./mach build installer > artifacts/konafox-installer.log 2>&1
+```
+
+The object directory is `obj-konafox`. The executable is
+`obj-konafox/dist/bin/konafox.exe`. Packages and the full offline installer are
+under `obj-konafox/dist/`; their filenames are generated by upstream's package
+naming rules with the `konafox` application name. Install using that full
+installer, which obtains its product directory from `BrandFullNameInternal`.
+Do not build or distribute an upstream Waterfox download stub as KonaFox.
+
+After a successful full build, frontend-only rebuilds can use:
+
+```sh
+./mach build faster > artifacts/konafox-faster.log 2>&1
+```
+
+After native/resource/build configuration changes, use `./mach build` again.
+For a clean rebuild, first verify that `MOZCONFIG` selects KonaFox and that the
+resolved object directory is `obj-konafox`, then run `./mach clobber` followed by
+`./mach build`. Clobber removes that build's object files, not source or profiles.
+
+## Validation
+
+These checks do not require a compiled browser:
+
+```sh
+python3 konafox/tools/verify_source.py
+node --test konafox/tests/palette.test.cjs
+git diff --check
+```
+
+The source checker uses Mozilla's real preprocessor for metadata and page
+substitutions, checks packaged resource paths and localization references, and
+validates Windows icon frames and installer bitmaps. The Node tests exercise
+Waterfox's palette manager with its external theme service stubbed. They do not
+prove native rendering, packaging, or profile separation at runtime.
+
+With the build ready:
+
+```sh
+./mach lint konafox browser/app/moz.build browser/app/splash.rc browser/app/module.ver \
+  browser/installer/windows/moz.build browser/installer/windows/nsis \
+  waterfox/browser/components/theme waterfox/browser/components/onboarding/content/onboarding.html
+./mach test --headless konafox/components/test/browser/browser.toml > artifacts/konafox-browser-tests.log 2>&1
+```
+
+The implementation request authorizes these tests. For later maintenance,
+follow the repository's test-approval instructions. Use the manual acceptance
+list in `KONAFOX_UPDATE_GUIDE.md` before treating a build as ready for daily use.
+
+## Identity and updates
+
+KonaFox uses `KonaFox` as application basename/profile, `konafox.exe`, the
+`private.konafox` distribution ID, and the `konafox-private` channel. On Windows,
+the normal profile root is `%APPDATA%\KonaFox`, with local cache state under
+`%LOCALAPPDATA%\KonaFox`. Do not pass a Waterfox/Firefox profile explicitly to
+KonaFox. The Firefox compatibility application ID and user agent remain inherited.
+
+The private development configuration inherits Waterfox's disabled updater.
+There is no KonaFox update server, signing pipeline, MSIX identity, or release
+service. Install updates from your own freshly built full packages. Pull and
+rebuild Waterfox security updates promptly. Existing upstream release workflows
+still produce Waterfox and must not be used to publish KonaFox.
+
+## Session evidence and remaining limitations
+
+See `konafox/VALIDATION.md` for the actual environment, commands, results, and
+remaining blockers. A documented command is not evidence that it succeeded.

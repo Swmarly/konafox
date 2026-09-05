@@ -1,4 +1,16 @@
-# Waterfox
+# KonaFox
+
+KonaFox is a private Konata Izumi / Lucky Star themed build of Waterfox, with
+isolated branding, periwinkle/indigo chrome, replaceable artwork and a separate
+Windows installation/profile identity. The underlying browser remains Waterfox.
+
+- [Build and package KonaFox](KONAFOX_BUILD.md)
+- [Customization map and compatibility decisions](KONAFOX_MODIFICATIONS.md)
+- [Update from Waterfox](KONAFOX_UPDATE_GUIDE.md)
+- [Replace the temporary artwork](konafox/ASSETS.md)
+- [Validation status](konafox/VALIDATION.md)
+
+## Waterfox base
 
 Waterfox is a customisable browser based on Mozilla Firefox. This repository contains Mozilla platform code, Waterfox product code, branding, features, packaging, and release files.
 
