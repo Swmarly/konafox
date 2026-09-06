@@ -15,6 +15,14 @@ On 2026-09-06, the approved Windows runner was registered and GitHub reported
 `Listening for Jobs`. The workflow is active and the signing secret exists.
 Registration and connectivity do not constitute a successful release build.
 
+The first workflow build reached compilation but failed archiving `whatsys`:
+Clang 22 produced ThinLTO bitcode while Mach selected its bootstrapped LLVM 21
+`llvm-lib`. The native Windows wrapper now explicitly selects the Clang 22
+archiver and linker for both target and host tools, alongside its compiler.
+The exact previously failing object archived successfully with LLVM 22, and
+the updated configuration selected Clang 22 for `AR`, `HOST_AR`, `LINKER` and
+`HOST_LINKER`. A new workflow run is required to validate the remaining build.
+
 The additional `konafox/build/mozconfig.release.windows` configuration completed
 successfully (`artifacts/konafox-release-configure.log`). Its generated settings
 confirm `MOZ_UPDATER=1`, `MOZ_VERIFY_MAR_SIGNATURE=1`, `konafox-release` for both

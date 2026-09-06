@@ -17,6 +17,10 @@ case "$(uname -s)" in
         export CXX="$CC"
         export HOST_CC="$CC"
         export HOST_CXX="$CC"
+        export AR="$clang22/bin/llvm-lib.exe"
+        export HOST_AR="$AR"
+        export LINKER="$clang22/bin/lld-link.exe"
+        export HOST_LINKER="$LINKER"
         ac_add_options --with-l10n-base="$(cygpath -m "$topsrcdir/waterfox/browser/locales")"
         ac_add_options --with-wasi-sysroot="$(cygpath -m "$wasi_sysroot")"
         ;;
