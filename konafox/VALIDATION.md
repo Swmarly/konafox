@@ -21,7 +21,19 @@ Clang 22 produced ThinLTO bitcode while Mach selected its bootstrapped LLVM 21
 archiver and linker for both target and host tools, alongside its compiler.
 The exact previously failing object archived successfully with LLVM 22, and
 the updated configuration selected Clang 22 for `AR`, `HOST_AR`, `LINKER` and
-`HOST_LINKER`. A new workflow run is required to validate the remaining build.
+`HOST_LINKER`. The next workflow run compiled KonaFox successfully in 40 minutes
+15 seconds, then exposed a packaging mismatch: the inherited manifest requires
+the internal `firefox-branding.js` filename. The KonaFox preference file now
+uses that filename, with a source validation check to catch future mismatches.
+`konafox/defs.mk` supplies the application ID needed by branding language packs.
+
+Local packaging of that completed build passed after these fixes, producing the
+Windows ZIP, offline installer and language pack (`release-package-fix3.log` in
+the runner checkout's ignored `artifacts/`). The release script selects the
+installer from `dist/` and excludes the separate XPT debug ZIP. An unsupported
+extra `mach build installer` command was removed because `mach package` already
+creates the installer. Failed build commands now show their final log lines in
+the Actions job output.
 
 The additional `konafox/build/mozconfig.release.windows` configuration completed
 successfully (`artifacts/konafox-release-configure.log`). Its generated settings
@@ -36,10 +48,18 @@ actual Windows MAR reader and verifier with Clang 22 and the configured SDK:
 valid signatures returned 0; a wrong key and a changed signature each returned 1
 (`artifacts/native-mar-check.log`). This checks native cryptographic compatibility.
 
-The release workflow also requires native `signmar.exe` verification and a
-headless launch of the packaged browser before publishing. These workflow gates
-have not run yet. A complete installer build and a two-release client upgrade
-remain unverified. See `KONAFOX_RELEASE.md` for setup and release operation.
+The release script's final steps passed locally against the completed build
+with the packaging fixes applied. The packaged browser exited successfully after
+creating its headless screenshot. The offline installer is 91,260,339 bytes, the
+ZIP is 135,180,426 bytes, and the signed complete MAR is 99,686,953 bytes. Both the
+Python verifier and the built Windows `signmar.exe` accepted the MAR signature;
+release JSON, update XML and SHA-512 checksums were generated successfully
+(`release-final-check.log` in the runner checkout's ignored `artifacts/`).
+
+These local validation artifacts were not published. A new workflow run must
+build the committed fixes and exercise GitHub publication. A two-release client
+upgrade and interactive installer installation/uninstallation remain unverified.
+See `KONAFOX_RELEASE.md` for setup and release operation.
 
 ## Completed checks
 
@@ -95,8 +115,8 @@ the KonaFox basename, display name and profile, `konafox` executable name,
 `private.konafox` distribution and `konafox-private` channel, with the inherited
 Firefox compatibility application ID. Profile/distribution selection uses
 Waterfox's implied project options, as this tree rejects a mozconfig profile
-override. Neither a successful full baseline nor a successful KonaFox build is
-claimed yet. The requested wrap-up stops short of starting another long build.
+override. A complete baseline build remains unverified; the later KonaFox release
+compilation and packaging succeeded as recorded above.
 Build logs and local dependency downloads live in ignored `artifacts/`.
 
 To resume, use the prepared PowerShell environment in `KONAFOX_BUILD.md`, set
@@ -107,7 +127,7 @@ package and exercise the KonaFox installer using the documented commands.
 
 ## Runtime acceptance still required
 
-After a successful KonaFox build, run the browser test manifest at
+With the KonaFox build available, run the browser test manifest at
 `konafox/components/test/browser/browser.toml`, then the manual checklist in
 `KONAFOX_UPDATE_GUIDE.md`. In particular, verify native About-page localization and
 content principal, normal browsing and Waterfox features, installed extensions,

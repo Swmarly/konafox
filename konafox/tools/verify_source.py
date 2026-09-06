@@ -78,6 +78,11 @@ def main():
 
     for file in (ROOT / "konafox").rglob("*.svg"):
         ElementTree.parse(file)
+    package_manifest = (ROOT / "browser/installer/package-manifest.in").read_text()
+    for file in (ROOT / "konafox/branding/pref").glob("*.js"):
+        assert f"@RESPATH@/browser/@PREF_DIR@/{file.name}" in package_manifest, (
+            f"Branding preference file is missing from the package manifest: {file.name}"
+        )
     original = (ROOT / "browser/app/waterfox.exe.manifest").read_text()
     manifest = (ROOT / "konafox/branding/konafox.exe.manifest").read_text()
     assert manifest == original.replace('name="Waterfox"', 'name="KonaFox"').replace(

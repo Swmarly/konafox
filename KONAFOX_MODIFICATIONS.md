@@ -22,6 +22,7 @@ release number. KonaFox's customization version is independently `0.1.0`.
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `konafox/build/`      | Thin Waterfox-derived configurations, separate object directories                                                          |
 | `konafox/branding/`   | Standard Mozilla branding directory: localized product strings, Windows resources, NSIS assets and presentation-only prefs |
+| `konafox/defs.mk`     | Application ID inherited by KonaFox's branding language-pack targets                                                       |
 | `konafox/assets/`     | Editable SVG masters; see `konafox/ASSETS.md`                                                                              |
 | `konafox/theme/`      | Scoped browser/new-tab/private/onboarding decoration                                                                       |
 | `konafox/components/` | Palette, about-page registration, native browser tests                                                                     |
@@ -65,6 +66,8 @@ defaults intact. See `KONAFOX_RELEASE.md` for setup and verification boundaries.
 
 - `MOZ_APP_ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}` and the Firefox UA preserve
   extension/site compatibility. They are not profile or install-directory IDs.
+- The internal `firefox-branding.js` filename matches the inherited package
+  manifest; its contents are KonaFox's branding preferences.
 - Internal vendor `BrowserWorks` stays inherited because upstream shell and
   installer integration use that registry namespace. Its product subkeys now
   resolve to KonaFox. Visible EXE/installer company metadata is separately branded.
@@ -95,7 +98,8 @@ Artwork is explicitly provisional. Final supplied Konata art can replace SVG
 masters or generated outputs without touching browser behavior. Windows x64 and
 the full NSIS installer are the supported target; macOS bundles, Linux packaging,
 MSIX signing/identity and download stubs are not implemented. Signed automatic
-updates are configured for Windows release builds; the full release and upgrade
-path still needs its first end-to-end run.
+updates are configured for Windows release builds. Local release packaging and
+signature checks passed; GitHub publication and a client upgrade still need
+their first end-to-end run.
 
 See `konafox/VALIDATION.md` for tested versus untested layers.

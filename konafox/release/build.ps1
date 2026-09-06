@@ -36,14 +36,16 @@ $releasePython = Join-Path $releaseRoot 'artifacts/release-venv/Scripts/python.e
 Invoke-Checked $releasePython @('-m', 'pip', 'install', '-r', 'konafox/release/requirements.txt')
 Invoke-Checked $releasePython @('konafox/release/release.py', 'check-key')
 
-foreach ($command in @('bootstrap', 'build', 'package', 'installer')) {
+foreach ($command in @('bootstrap', 'build', 'package')) {
     $arguments = switch ($command) {
         'bootstrap' { @('mach', '--no-interactive', 'bootstrap', '--application-choice', 'browser', '--no-system-changes') }
-        'installer' { @('mach', 'build', 'installer') }
         default { @('mach', $command) }
     }
     & $buildPython @arguments *> "artifacts/release-$command.log"
-    if ($LASTEXITCODE -ne 0) { throw "$command failed; see the release logs artifact." }
+    if ($LASTEXITCODE -ne 0) {
+        Get-Content -LiteralPath "artifacts/release-$command.log" -Tail 80
+        throw "$command failed; see the release logs artifact."
+    }
 }
 
 $dist = Join-Path $releaseRoot 'obj-konafox-release/dist'
@@ -64,8 +66,8 @@ if ($smoke.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $screenshot)) { throw
 $prefix = "KonaFox-$($info.appVersion)-$($info.buildID)-win64"
 $output = Join-Path $releaseRoot "artifacts/release-$($info.buildID)"
 New-Item -ItemType Directory -Path $output | Out-Null
-$installers = @(Get-ChildItem -LiteralPath (Join-Path $dist 'install/sea') -Filter '*.installer.exe' -File)
-$packages = @(Get-ChildItem -LiteralPath $dist -Filter '*.zip' -File)
+$installers = @(Get-ChildItem -LiteralPath $dist -Filter 'konafox-*.en-US.win64.installer.exe' -File)
+$packages = @(Get-ChildItem -LiteralPath $dist -Filter 'konafox-*.en-US.win64.zip' -File)
 if ($installers.Count -ne 1 -or $packages.Count -ne 1) { throw 'Expected exactly one fresh installer and ZIP package' }
 Copy-Item -LiteralPath $installers[0].FullName -Destination (Join-Path $output "$prefix.exe")
 Copy-Item -LiteralPath $packages[0].FullName -Destination (Join-Path $output "$prefix.zip")

@@ -115,8 +115,10 @@ build ID when rebuilding binaries. Do not reuse a build ID with changed files.
 
 Before relying on unattended updates, make two successful releases and verify
 that a disposable installation of the first updates to the second, preserves
-its profile and extensions, and restarts successfully. Neither the full release
-build nor this end-to-end upgrade has been completed locally yet.
+its profile and extensions, and restarts successfully. Compilation, installer/ZIP
+packaging, headless browser startup, complete-MAR signing, native signature
+verification and feed generation passed locally on 2026-09-06. GitHub publication
+and this end-to-end upgrade still require verification.
 
 To run the focused signing/feed tests:
 
