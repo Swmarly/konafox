@@ -54,6 +54,13 @@ Update this table whenever another upstream file is changed. No code in the
 locale submodule is edited. Generated `artifacts/` and `obj-*` files are not part
 of the customization layer.
 
+The release pipeline also adds `.github/workflows/konafox-release.yml` and
+`konafox/release/`. `waterfox/browser/moz.build` defines the KonaFox preference
+branch; `waterfox/browser/app/profile/01-services.js` selects its GitHub update
+feed; and `toolkit/mozapps/update/updater/moz.build` embeds its public signing
+certificate for the `konafox-release` channel. These branches leave Waterfox's
+defaults intact. See `KONAFOX_RELEASE.md` for setup and verification boundaries.
+
 ## Deliberately inherited identifiers and behavior
 
 - `MOZ_APP_ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}` and the Firefox UA preserve
@@ -87,6 +94,8 @@ KonaFox's extra decoration is gated out of forced colors.
 Artwork is explicitly provisional. Final supplied Konata art can replace SVG
 masters or generated outputs without touching browser behavior. Windows x64 and
 the full NSIS installer are the supported target; macOS bundles, Linux packaging,
-MSIX signing/identity, download stubs and automatic updates are not implemented.
+MSIX signing/identity and download stubs are not implemented. Signed automatic
+updates are configured for Windows release builds; the full release and upgrade
+path still needs its first end-to-end run.
 
 See `konafox/VALIDATION.md` for tested versus untested layers.

@@ -7,7 +7,11 @@
 // Application updates.
 pref("app.update.enabled", true);
 pref("app.update.notifyDuringDownload", true);
+#ifdef KONAFOX
+pref("app.update.url.override", "https://github.com/Swmarly/konafox/releases/download/konafox-updates/update.xml", sticky);
+#else
 pref("app.update.url.override", "", sticky);
+#endif
 pref("extensions.systemAddon.update.url", "https://aus.waterfox.com/update/SystemAddons/%DISPLAY_VERSION%/%OS%_%ARCH%/%CHANNEL%/%OS_VERSION%/%SYSTEM_CAPABILITIES%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%/update.xml");
 
 pref("intl.multilingual.downloadEnabled", false, locked);

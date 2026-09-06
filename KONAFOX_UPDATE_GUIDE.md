@@ -124,3 +124,5 @@ Review the complete merge and docs before committing. Do not push or publish
 unless requested. The inherited Waterfox release/signing workflows are not a
 KonaFox release pipeline. A successful upstream fetch alone delivers no security
 fixes to an installed browser: rebuild, validate and install the updated binary.
+For release installations, publish the updated source through **KonaFox Release**
+to offer a signed native update to clients; see `KONAFOX_RELEASE.md`.

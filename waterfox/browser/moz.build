@@ -10,6 +10,7 @@ DIST_SUBDIR = "browser"
 export("DIST_SUBDIR")
 
 if CONFIG["MOZ_APP_NAME"] == "konafox":
+    DEFINES["KONAFOX"] = True
     DIRS += ["/konafox"]
 
 JS_PREFERENCE_PP_FILES += [

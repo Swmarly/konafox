@@ -156,10 +156,12 @@ the normal profile root is `%APPDATA%\KonaFox`, with local cache state under
 KonaFox. The Firefox compatibility application ID and user agent remain inherited.
 
 The private development configuration inherits Waterfox's disabled updater.
-There is no KonaFox update server, signing pipeline, MSIX identity, or release
-service. Install updates from your own freshly built full packages. Pull and
-rebuild Waterfox security updates promptly. Existing upstream release workflows
-still produce Waterfox and must not be used to publish KonaFox.
+The separate release configuration enables signed native updates on the
+`konafox-release` channel. See `KONAFOX_RELEASE.md` for the **KonaFox Release**
+GitHub workflow, runner/signing setup, downloadable installers and update feed.
+Existing upstream release workflows still produce Waterfox. MSIX identity and
+installer Authenticode signing are not configured. Pull and rebuild Waterfox
+security updates promptly.
 
 ## Session evidence and remaining limitations
 

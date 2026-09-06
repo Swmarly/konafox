@@ -1,0 +1,7 @@
+mar==3.2.1
+cryptography==50.0.1
+construct==2.10.70
+click==8.5.0
+six==1.17.0
+cffi==2.1.1
+pycparser==3.0

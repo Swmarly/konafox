@@ -9,7 +9,7 @@ pref("startup.homepage_welcome_url", "about:welcome");
 pref("startup.homepage_welcome_url.additional", "about:konafox");
 pref("app.update.interval", 43200);
 pref("app.update.promptWaitTime", 691200);
-pref("app.update.url.manual", "about:konafox");
+pref("app.update.url.manual", "https://github.com/Swmarly/konafox/releases");
 pref("app.update.url.details", "about:konafox");
 pref("app.releaseNotesURL", "about:konafox");
 pref("app.releaseNotesURL.aboutDialog", "about:konafox");

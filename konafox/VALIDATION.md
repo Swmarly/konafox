@@ -2,6 +2,31 @@
 
 Validation date: 2026-09-05. Base revision: `fd6662f3abfe`.
 
+## Release workflow and native updates
+
+Release checks finalized on 2026-09-06. Targeted Mach Ruff, Ruff-format,
+Fluent and ESLint checks report zero errors and warnings. Prettier, PowerShell
+parsing, shell syntax and source validation passed. Preference preprocessing
+confirmed KonaFox's update URL and preserved Waterfox's original branch.
+
+The additional `konafox/build/mozconfig.release.windows` configuration completed
+successfully (`artifacts/konafox-release-configure.log`). Its generated settings
+confirm `MOZ_UPDATER=1`, `MOZ_VERIFY_MAR_SIGNATURE=1`, `konafox-release` for both
+the update and accepted MAR channels, and no disabled Authenticode checks. The
+updater's generated build rules consume KonaFox's public DER certificate.
+
+All five focused release tests passed: valid signing, tamper rejection, wrong-key
+and version rejection, unsigned archive rejection, feed advancement/retry rules,
+and XML hash/size/URL consistency. A small harness compiled the repository's
+actual Windows MAR reader and verifier with Clang 22 and the configured SDK:
+valid signatures returned 0; a wrong key and a changed signature each returned 1
+(`artifacts/native-mar-check.log`). This checks native cryptographic compatibility.
+
+The release workflow also requires native `signmar.exe` verification and a
+headless launch of the packaged browser before publishing. These workflow gates
+have not run yet. A complete installer build and a two-release client upgrade
+remain unverified. See `KONAFOX_RELEASE.md` for setup and release operation.
+
 ## Completed checks
 
 - `python konafox/tools/verify_source.py`: passed. Uses Mozilla's preprocessor
