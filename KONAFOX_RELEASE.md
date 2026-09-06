@@ -9,8 +9,14 @@ the default branch; it does not execute pull-request code on your runner.
 
 ## One-time setup
 
-The signing secret is already configured in `Swmarly/konafox`. Step 3 below
-documents how to restore it if needed. A Windows runner still needs to be connected.
+The signing secret and Windows runner are configured in `Swmarly/konafox`.
+The runner is `KonaFox-DESKTOP-QQLGN8Q`, installed at `I:\KonaFoxRunner`, with
+its own checkout under `I:\KonaFoxRunner\_work`. It runs in the background as
+your Windows user and reuses the prepared toolchain from this source checkout.
+Keep the PC awake and online while building. After restarting or signing out,
+double-click `I:\KonaFoxRunner\Start-KonaFoxRunner.cmd` to reconnect it. The
+launcher prevents duplicate instances. No service or automatic sign-in task is
+installed. The following steps document setup on another machine and recovery.
 
 1. Push the KonaFox changes, including `.github/workflows/konafox-release.yml`,
    onto `current`. GitHub only lists manual workflows present on the default

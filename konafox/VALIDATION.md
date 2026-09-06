@@ -9,6 +9,12 @@ Fluent and ESLint checks report zero errors and warnings. Prettier, PowerShell
 parsing, shell syntax and source validation passed. Preference preprocessing
 confirmed KonaFox's update URL and preserved Waterfox's original branch.
 
+On 2026-09-06, the approved Windows runner was registered and GitHub reported
+`KonaFox-DESKTOP-QQLGN8Q` online, idle, running version 2.337.0 with the required
+`self-hosted`, `Windows`, `X64` and `konafox` labels. Its console confirmed
+`Listening for Jobs`. The workflow is active and the signing secret exists.
+Registration and connectivity do not constitute a successful release build.
+
 The additional `konafox/build/mozconfig.release.windows` configuration completed
 successfully (`artifacts/konafox-release-configure.log`). Its generated settings
 confirm `MOZ_UPDATER=1`, `MOZ_VERIFY_MAR_SIGNATURE=1`, `konafox-release` for both
