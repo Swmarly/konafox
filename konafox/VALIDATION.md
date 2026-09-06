@@ -61,6 +61,13 @@ build the committed fixes and exercise GitHub publication. A two-release client
 upgrade and interactive installer installation/uninstallation remain unverified.
 See `KONAFOX_RELEASE.md` for setup and release operation.
 
+The subsequent workflow run `34043381392` built and uploaded all release assets,
+but publication failed because the release-by-tag lookup omitted its draft.
+The publisher now falls back to the paginated release list, which includes drafts.
+All eight focused release tests pass, including draft, published and missing
+release lookup cases. The existing uploaded files were verified against the
+successful build and signed MAR before recovering publication without a rebuild.
+
 ## Completed checks
 
 - `python konafox/tools/verify_source.py`: passed. Uses Mozilla's preprocessor

@@ -28,7 +28,14 @@ def gh(*arguments, missing_ok=False):
 
 def get_release(tag):
     result = gh("api", f"repos/{REPOSITORY}/releases/tags/{tag}", missing_ok=True)
-    return json.loads(result) if result else None
+    if result:
+        return json.loads(result)
+    pages = json.loads(
+        gh("api", "--paginate", "--slurp", f"repos/{REPOSITORY}/releases?per_page=100")
+    )
+    return next(
+        (item for page in pages for item in page if item["tag_name"] == tag), None
+    )
 
 
 def read_metadata(tag):
@@ -137,6 +144,10 @@ def publish(directory):
             "--clobber",
         )
         uploaded = get_release(tag)
+        require(
+            uploaded is not None,
+            "Uploaded release could not be found; rerun this publish job",
+        )
         sizes = {asset["name"]: asset["size"] for asset in uploaded["assets"]}
         require(
             all(sizes.get(path.name) == path.stat().st_size for path in files),

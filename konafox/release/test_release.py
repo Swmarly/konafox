@@ -17,7 +17,25 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.x509.oid import NameOID
 from mardor.writer import MarWriter
-from publish import check_advancement
+from publish import check_advancement, get_release
+
+
+class ReleaseLookupTests(unittest.TestCase):
+    def test_published_release(self):
+        published = {"tag_name": "example", "draft": False}
+        with patch("publish.gh", return_value=json.dumps(published)) as api:
+            self.assertEqual(get_release("example"), published)
+            self.assertEqual(api.call_count, 1)
+
+    def test_draft_release_on_later_page(self):
+        draft = {"tag_name": "example", "draft": True}
+        pages = [[{"tag_name": "another"}], [draft]]
+        with patch("publish.gh", side_effect=[None, json.dumps(pages)]):
+            self.assertEqual(get_release("example"), draft)
+
+    def test_missing_release(self):
+        with patch("publish.gh", side_effect=[None, "[[]]"]):
+            self.assertIsNone(get_release("example"))
 
 
 class ReleaseTests(unittest.TestCase):
